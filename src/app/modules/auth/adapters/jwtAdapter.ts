@@ -3,23 +3,24 @@ class JwtAdapter {
     payload,
   }: {
     payload: {
-      email: string;
+      username: string;
       password: string;
     };
   }): Promise<any> {
+    console.log(payload)
     const res = await fetch(`http://localhost:8000/auth/token/`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({
-        email: payload.email,
+      body: new URLSearchParams({
+        username: payload.username,
         password: payload.password,
       }),
     });
 
     if (!res.ok) {
-      throw new Error("Unable to authorize. Please refresh the page.");
+      throw new Error("Unable to authorize");
     }
     const jwt = await res.json();
     return jwt;

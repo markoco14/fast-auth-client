@@ -2,7 +2,7 @@ import { useUserContext } from "@/app/UserContext";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -31,7 +31,7 @@ export default function Login() {
           <input
             type="email"
             className="rounded p-2 shadow"
-            {...register("email", { required: true })}
+            {...register("username", { required: true })}
           />
         </div>
         <div className="mb-4 flex flex-col">
