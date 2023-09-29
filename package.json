@@ -12,7 +12,8 @@
     "jwt-decode": "^3.1.2",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-hook-form": "^7.46.2"
   },
   "devDependencies": {
     "@types/node": "latest",
