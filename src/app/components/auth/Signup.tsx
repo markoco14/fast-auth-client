@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { jwtAdapter } from "@/app/modules/auth/adapters/jwtAdapter";
+import { userAdapter } from "@/app/modules/auth/adapters/userAdapter";
 
 type Inputs = {
   email: string;
@@ -20,9 +20,7 @@ export default function Signup() {
 			password: data.password
 		}
     try {
-			// TODO: change to create user
-      const token = await jwtAdapter.get({payload: payload});
-			console.log(token);
+      const user = await userAdapter.create({payload: payload});
       reset();
     } catch (error) {
       console.error(error);

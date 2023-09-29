@@ -7,7 +7,6 @@ class JwtAdapter {
       password: string;
     };
   }): Promise<any> {
-    console.log(payload)
     const res = await fetch(`http://localhost:8000/auth/token/`, {
       method: "POST",
       headers: {
