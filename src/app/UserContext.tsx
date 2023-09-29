@@ -1,3 +1,5 @@
+"use client"
+
 import jwt_decode from "jwt-decode";
 import { createContext, useContext, useState } from "react";
 import { jwtAdapter } from "@/app/modules/auth/adapters/jwtAdapter";
@@ -29,7 +31,7 @@ export default function UserContextProvider({
     try {
       await jwtAdapter.get({ payload: formData }).then((res) => {
         setAuthTokens(res);
-        setUser(jwt_decode(res.access));
+        setUser(jwt_decode(res.access_token));
         localStorage.setItem("authTokens", JSON.stringify(res));
       });
     } catch (error) {
