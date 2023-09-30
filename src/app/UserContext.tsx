@@ -60,10 +60,10 @@ export default function UserContextProvider({
         logout();
       }
     };
-    // const tenSeconds = 1000 * 10
-    // const oneMinute = 1000 * 60 * 1
+    const tenSeconds = 1000 * 10
+    const oneMinute = 1000 * 60 * 1
     const fiveMinutes = 1000 * 60 * 5;
-    // const tenMinutes = 1000 * 60 * 10;
+    const tenMinutes = 1000 * 60 * 10;
     if (!user || !authTokens) {
       const tokens = localStorage.getItem("authTokens");
 
