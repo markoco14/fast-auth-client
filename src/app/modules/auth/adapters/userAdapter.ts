@@ -3,16 +3,20 @@ class UserAdapter {
     payload,
   }: {
     payload: {
+      firstName: string;
+      lastName: string;
       email: string;
       password: string;
     };
   }): Promise<any> {
-    const res = await fetch(`http://localhost:8000/auth/`, {
+    const res = await fetch(`http://localhost:8000/users/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        first_name: payload.firstName,
+        last_name: payload.lastName,
         email: payload.email,
         password: payload.password,
       }),
