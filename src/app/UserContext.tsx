@@ -49,10 +49,10 @@ export default function UserContextProvider({
     let updateToken = async () => {
       try {
         await jwtAdapter
-          .refresh({ refresh: authTokens.refresh })
+          .refresh({ refresh_token: authTokens.refresh_token })
           .then((res) => {
             setAuthTokens(res);
-            setUser(jwt_decode(res.access));
+            setUser(jwt_decode(res.access_token));
             localStorage.setItem("authTokens", JSON.stringify(res));
           });
       } catch (error) {
@@ -62,7 +62,8 @@ export default function UserContextProvider({
     };
     // const tenSeconds = 1000 * 10
     // const oneMinute = 1000 * 60 * 1
-    const tenMinutes = 1000 * 60 * 10;
+    const fiveMinutes = 1000 * 60 * 5;
+    // const tenMinutes = 1000 * 60 * 10;
     if (!user || !authTokens) {
       const tokens = localStorage.getItem("authTokens");
 
@@ -75,7 +76,7 @@ export default function UserContextProvider({
         if (authTokens) {
           updateToken();
         }
-      }, tenMinutes);
+      }, fiveMinutes);
       return () => clearInterval(interval);
     }
   }, [authTokens, user]);

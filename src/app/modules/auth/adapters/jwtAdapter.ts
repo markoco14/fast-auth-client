@@ -7,7 +7,7 @@ class JwtAdapter {
       password: string;
     };
   }): Promise<any> {
-    const res = await fetch(`http://localhost:8000/auth/token/`, {
+    const res = await fetch(`http://localhost:8000/auth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -25,14 +25,16 @@ class JwtAdapter {
     return jwt;
   }
 
-  public async refresh({ refresh }: { refresh: any }): Promise<any> {
-    const res = await fetch(`http://localhost:8000/auth/refresh/`, {
+  public async refresh({ refresh_token }: { refresh_token: any }): Promise<any> {
+    const res = await fetch(`http://localhost:8000/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${refresh_token}`,
+        "refresh-token": `${refresh_token}`
       },
       body: JSON.stringify({
-        refresh: refresh,
+        refresh: refresh_token,
       }),
     });
 
