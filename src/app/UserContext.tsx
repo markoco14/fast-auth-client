@@ -1,7 +1,7 @@
 "use client"
 
 import jwt_decode from "jwt-decode";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { jwtAdapter } from "@/app/modules/auth/adapters/jwtAdapter";
 
 type UserContextProviderProps = {
@@ -45,39 +45,40 @@ export default function UserContextProvider({
     localStorage.removeItem("authTokens");
   };
 
-  // useEffect(() => {
-  //   let updateToken = async () => {
-  //     try {
-  //       await jwtAdapter
-  //         .refresh({ refresh: authTokens.refresh })
-  //         .then((res) => {
-  //           setAuthTokens(res);
-  //           setUser(jwt_decode(res.access));
-  //           localStorage.setItem("authTokens", JSON.stringify(res));
-  //         });
-  //     } catch (error) {
-  //       console.error(error);
-  //       logout();
-  //     }
-  //   };
+  useEffect(() => {
+    let updateToken = async () => {
+      try {
+        await jwtAdapter
+          .refresh({ refresh: authTokens.refresh })
+          .then((res) => {
+            setAuthTokens(res);
+            setUser(jwt_decode(res.access));
+            localStorage.setItem("authTokens", JSON.stringify(res));
+          });
+      } catch (error) {
+        console.error(error);
+        logout();
+      }
+    };
+    // const tenSeconds = 1000 * 10
+    // const oneMinute = 1000 * 60 * 1
+    const tenMinutes = 1000 * 60 * 10;
+    if (!user || !authTokens) {
+      const tokens = localStorage.getItem("authTokens");
 
-  //   const tenMinutes = 1000 * 60 * 10;
-  //   if (!user || !authTokens) {
-  //     const tokens = localStorage.getItem("authTokens");
-
-  //     if (typeof tokens === "string") {
-  //       setAuthTokens(() => JSON.parse(tokens));
-  //       setUser(() => jwt_decode(tokens));
-  //     }
-  //   } else {
-  //     const interval = setInterval(() => {
-  //       if (authTokens) {
-  //         updateToken();
-  //       }
-  //     }, tenMinutes);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [authTokens, user]);
+      if (typeof tokens === "string") {
+        setAuthTokens(() => JSON.parse(tokens));
+        setUser(() => jwt_decode(tokens));
+      }
+    } else {
+      const interval = setInterval(() => {
+        if (authTokens) {
+          updateToken();
+        }
+      }, tenMinutes);
+      return () => clearInterval(interval);
+    }
+  }, [authTokens, user]);
 
   return (
     <UserContext.Provider
