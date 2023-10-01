@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { userAdapter } from "@/app/modules/auth/adapters/userAdapter";
+import { userAdapter } from "@/app/users/adapters/userAdapter";
 
 type Inputs = {
   firstName: string;
@@ -17,14 +17,14 @@ export default function Signup() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-		const payload = {
+    const payload = {
       firstName: data.firstName,
       lastName: data.lastName,
-			email: data.email,
-			password: data.password
-		}
+      email: data.email,
+      password: data.password,
+    };
     try {
-      const user = await userAdapter.create({payload: payload});
+      const user = await userAdapter.create({ payload: payload });
       reset();
     } catch (error) {
       console.error(error);
