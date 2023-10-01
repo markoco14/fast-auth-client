@@ -25,17 +25,22 @@ class JwtAdapter {
     return jwt;
   }
 
-  public async refresh({ refresh_token }: { refresh_token: any }): Promise<any> {
+  public async refresh({ access_token, refresh_token }: { access_token: any; refresh_token: any }): Promise<any> {
     const res = await fetch(`http://localhost:8000/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${refresh_token}`,
+        // I think the authorization should be the access_token
+        // at least for consistency
+        // although the refresh token would have this info
+        Authorization: `Bearer ${access_token}`,
         "refresh-token": `${refresh_token}`
       },
-      body: JSON.stringify({
-        refresh: refresh_token,
-      }),
+      // no body for now
+      // can see about headers vs body for sending refresh token
+      // body: JSON.stringify({
+      //   refresh: refresh_token,
+      // }),
     });
 
     if (!res.ok) {
