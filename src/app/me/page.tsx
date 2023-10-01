@@ -1,18 +1,20 @@
 import Link from "next/link";
-import { userAdapter } from "../modules/auth/adapters/userAdapter";
+import { userAdapter } from "@/modules/users/adapters/userAdapter";
+import { cookies } from "next/headers";
+import Profile from "@/modules/users/components/Profile";
 
 async function getData() {
-  const res = await userAdapter.get_me()
-  .then((res) => {
-    return res
-  })
-  
-  return res
+  try {
+    const cookieStore = cookies();
+    const res = await userAdapter.get_me({ cookieStore: cookieStore });
+    return { data: res };
+  } catch (error) {
+    return { error: "No Access" };
+  }
 }
 
 export default async function Me() {
-	const data = await getData();
-	console.log('data', data)
+  const { data, error } = await getData();
 
   return (
     <main>
@@ -26,10 +28,12 @@ export default async function Me() {
           </li>
         </ul>
       </nav>
-      <h1>User Profile</h1>
-			<p>First Name: {data?.first_name}</p>
-			<p>Last Name: {data?.last_name}</p>
-			<p>Email: {data?.email}</p>
+      {error ? (
+        <p>You need to log in to see this page.</p>
+      ) : (
+        // @ts-ignore
+        <Profile data={data} />
+      )}
     </main>
   );
 }

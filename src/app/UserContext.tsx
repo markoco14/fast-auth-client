@@ -2,7 +2,9 @@
 
 import jwt_decode from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
-import { jwtAdapter } from "@/app/modules/auth/adapters/jwtAdapter";
+import { jwtAdapter } from "@/modules/auth/adapters/jwtAdapter";
+import Cookie from 'js-cookie';
+import { cookies } from "next/headers";
 
 type UserContextProviderProps = {
   children: React.ReactNode; // not allowed: React.ReactNode
@@ -32,6 +34,12 @@ export default function UserContextProvider({
       await jwtAdapter.get({ payload: formData }).then((res) => {
         setAuthTokens(res);
         setUser(jwt_decode(res.access_token));
+
+        // set token in cookies
+        Cookie.set("accessToken", res.access_token, { expires: 1 }); // Expires in 7 days, you can adjust this
+        Cookie.set("refreshToken", res.refresh_token, { expires: 7 });
+
+        // set token in local storage
         localStorage.setItem("authTokens", JSON.stringify(res));
       });
     } catch (error) {
@@ -42,6 +50,11 @@ export default function UserContextProvider({
   let logout = () => {
     setUser(null);
     setAuthTokens(null);
+    // remove from cookoie
+    Cookie.remove("accessToken");
+    Cookie.remove("refreshToken");
+
+    // remove from local storage
     localStorage.removeItem("authTokens");
   };
 
@@ -49,10 +62,15 @@ export default function UserContextProvider({
     let updateToken = async () => {
       try {
         await jwtAdapter
-          .refresh({ refresh_token: authTokens.refresh_token })
+          .refresh({ access_token: authTokens.access_token, refresh_token: authTokens.refresh_token })
           .then((res) => {
             setAuthTokens(res);
             setUser(jwt_decode(res.access_token));
+            // set token in cookies
+            Cookie.set("accessToken", res.access_token, { expires: 1 }); // Expires in 7 days, you can adjust this
+            Cookie.set("refreshToken", res.refresh_token, { expires: 7 });
+
+            // set in local storage
             localStorage.setItem("authTokens", JSON.stringify(res));
           });
       } catch (error) {
@@ -76,7 +94,7 @@ export default function UserContextProvider({
         if (authTokens) {
           updateToken();
         }
-      }, fiveMinutes);
+      }, tenMinutes);
       return () => clearInterval(interval);
     }
   }, [authTokens, user]);
