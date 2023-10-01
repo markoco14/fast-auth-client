@@ -2,7 +2,7 @@
 
 import jwt_decode from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
-import { jwtAdapter } from "@/app/modules/auth/adapters/jwtAdapter";
+import { jwtAdapter } from "@/modules/auth/adapters/jwtAdapter";
 import Cookie from 'js-cookie';
 import { cookies } from "next/headers";
 

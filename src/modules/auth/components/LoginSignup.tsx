@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Signup from "@/app/modules/auth/components/Signup";
-import Login from "@/app/modules/auth/components/Login";
+import Signup from "@/modules/auth/components/Signup";
+import Login from "@/modules/auth/components/Login";
 import { useUserContext } from "@/app/UserContext";
 
 export default function LoginSignup() {

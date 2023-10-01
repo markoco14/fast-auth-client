@@ -1,4 +1,5 @@
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+
 class UserAdapter {
   public async get_me({cookieStore}: {cookieStore: ReadonlyRequestCookies}) {
     const accessToken = cookieStore.get('accessToken')?.value

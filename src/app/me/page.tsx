@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { userAdapter } from "@/app/modules/users/adapters/userAdapter";
+import { userAdapter } from "@/modules/users/adapters/userAdapter";
 import { cookies } from "next/headers";
-import UserProfile from "@/app/modules/users/components/UserProfile";
+import UserProfile from "@/modules/users/components/UserProfile";
 
 async function getData() {
   const cookieStore = cookies();

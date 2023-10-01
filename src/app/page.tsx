@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LoginSignup from "@/app/modules/auth/components/LoginSignup";
+import LoginSignup from "@/modules/auth/components/LoginSignup";
 
 
 export default function Home() {
