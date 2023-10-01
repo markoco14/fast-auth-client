@@ -1,22 +1,13 @@
 import Link from "next/link";
+import { userAdapter } from "../modules/auth/adapters/userAdapter";
 
 async function getData() {
-  const res = await fetch("http://127.0.0.1:8000/users/me", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-			// TODO: get jwt in headers....
-    },
-  });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
- 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
- 
-  return res.json()
+  const res = await userAdapter.get_me()
+  .then((res) => {
+    return res
+  })
+  
+  return res
 }
 
 export default async function Me() {
@@ -36,9 +27,9 @@ export default async function Me() {
         </ul>
       </nav>
       <h1>User Profile</h1>
-			<p>First Name: {data.first_name}</p>
-			<p>Last Name: {data.last_name}</p>
-			<p>Email: {data.email}</p>
+			<p>First Name: {data?.first_name}</p>
+			<p>Last Name: {data?.last_name}</p>
+			<p>Email: {data?.email}</p>
     </main>
   );
 }

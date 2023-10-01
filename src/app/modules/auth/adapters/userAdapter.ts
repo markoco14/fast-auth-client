@@ -1,4 +1,24 @@
 class UserAdapter {
+  public async get_me() {
+
+    const res = await fetch("http://127.0.0.1:8000/users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer your-token`,
+        "refresh-token": `your-token`,
+        // TODO: get jwt in headers....
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data')
+    }
+
+    return res.json();
+  }
+
+
   public async create({
     payload,
   }: {
