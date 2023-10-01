@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { userAdapter } from "../modules/auth/adapters/userAdapter";
+import { cookies } from "next/headers";
 
 async function getData() {
-  const res = await userAdapter.get_me()
+  const cookieStore = cookies();
+  const res = await userAdapter.get_me({cookieStore: cookieStore})
   .then((res) => {
     return res
   })
-  
+
   return res
 }
 
 export default async function Me() {
 	const data = await getData();
-	console.log('data', data)
+ 
 
   return (
     <main>
