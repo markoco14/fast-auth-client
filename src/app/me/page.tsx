@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { userAdapter } from "@/modules/users/adapters/userAdapter";
 import { cookies } from "next/headers";
-import UserProfile from "@/modules/users/components/UserProfile";
+import Profile from "@/modules/users/components/Profile";
 
 async function getData() {
   const cookieStore = cookies();
@@ -29,7 +29,7 @@ export default async function Me() {
           </li>
         </ul>
       </nav>
-      <UserProfile data={data}/>
+      <Profile data={data}/>
     </main>
   );
 }

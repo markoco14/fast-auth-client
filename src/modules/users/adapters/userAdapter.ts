@@ -1,8 +1,13 @@
-import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { UserProfile } from "../entities/UserProfile";
 
 class UserAdapter {
-  public async get_me({cookieStore}: {cookieStore: ReadonlyRequestCookies}) {
-    const accessToken = cookieStore.get('accessToken')?.value
+  public async get_me({
+    cookieStore,
+  }: {
+    cookieStore: ReadonlyRequestCookies;
+  }): Promise<UserProfile> {
+    const accessToken = cookieStore.get("accessToken")?.value;
 
     const res = await fetch("http://127.0.0.1:8000/users/me", {
       method: "GET",
@@ -10,16 +15,17 @@ class UserAdapter {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
 
-    return res.json();
-  }
+    const user = res.json();
 
+    return user;
+  }
 
   public async create({
     payload,
@@ -50,7 +56,6 @@ class UserAdapter {
     const user = await res.json();
     return user;
   }
-
 }
 
 export const userAdapter = new UserAdapter();
