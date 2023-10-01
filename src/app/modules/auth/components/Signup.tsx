@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { userAdapter } from "@/app/users/adapters/userAdapter";
+import { userAdapter } from "@/app/modules/users/adapters/userAdapter";
 
 type Inputs = {
   firstName: string;

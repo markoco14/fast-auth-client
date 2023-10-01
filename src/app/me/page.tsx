@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { userAdapter } from "@/app/users/adapters/userAdapter";
+import { userAdapter } from "@/app/modules/users/adapters/userAdapter";
 import { cookies } from "next/headers";
 
 async function getData() {
