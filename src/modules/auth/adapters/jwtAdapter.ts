@@ -7,7 +7,7 @@ class JwtAdapter {
       password: string;
     };
   }): Promise<any> {
-    const res = await fetch(`http://localhost:8000/auth/token`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -26,7 +26,7 @@ class JwtAdapter {
   }
 
   public async refresh({ access_token, refresh_token }: { access_token: any; refresh_token: any }): Promise<any> {
-    const res = await fetch(`http://localhost:8000/auth/refresh`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ class JwtAdapter {
         // at least for consistency
         // although the refresh token would have this info
         Authorization: `Bearer ${access_token}`,
-        "refresh-token": `${refresh_token}`
+        "refresh-token": `${refresh_token}`,
       },
       // no body for now
       // can see about headers vs body for sending refresh token
