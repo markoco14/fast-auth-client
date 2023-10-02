@@ -10,7 +10,7 @@ export default function LoginSignup() {
   const { user, logout } = useUserContext();
   return !user ? (
     <>
-      <div>
+      <div className="flex gap-4">
         <button onClick={() => setIsSignUp(true)}>Sign Up</button>
         <button onClick={() => setIsSignUp(false)}>Log In</button>
       </div>
