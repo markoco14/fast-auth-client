@@ -2,6 +2,7 @@ import Link from "next/link";
 import { userAdapter } from "@/modules/users/adapters/userAdapter";
 import { cookies } from "next/headers";
 import Profile from "@/modules/users/components/Profile";
+import Navbar from "@/components/Navbar";
 
 async function getData() {
   try {
@@ -20,16 +21,7 @@ export default async function Me() {
     return (
       <>
       <header className="mb-16 h-[48px] shadow">
-        <nav className="max-w-[600px] mx-auto flex h-full items-center">
-          <ul className="flex gap-4">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/me">Me</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
       </header>
       <main>
         <div className="max-w-[600px] mx-auto">
