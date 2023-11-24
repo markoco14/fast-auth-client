@@ -9,18 +9,18 @@ export default function LoginSignup() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const { user, logout } = useUserContext();
   return !user ? (
-    <>
+    <div className="max-w-[600px] mx-auto">
       <div className="flex gap-4">
         <button onClick={() => setIsSignUp(true)}>Sign Up</button>
         <button onClick={() => setIsSignUp(false)}>Log In</button>
       </div>
       {isSignUp ? <Signup /> : <Login />}
-    </>
+    </div>
   ) : (
-    <>
+    <div className="max-w-[600px] mx-auto">
       <p>You signed in!</p>
       <p>{user.email}</p>
       <button onClick={() => logout()}>Log Out</button>
-    </>
+    </div>
   );
 }

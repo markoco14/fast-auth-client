@@ -5,7 +5,7 @@ import LoginSignup from "@/modules/auth/components/LoginSignup";
 export default function Home() {
   return (
     <main>
-      <nav>
+      <nav className="max-w-[600px] mx-auto">
         <ul className="flex gap-4">
           <li>
             <Link href="/">Home</Link>
