@@ -17,23 +17,32 @@ export default async function Me() {
   const { data, error } = await getData();
 
   return (
-    <main>
-      <nav>
-        <ul className="flex gap-4">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/me">Me</Link>
-          </li>
-        </ul>
-      </nav>
-      {error ? (
-        <p>You need to log in to see this page.</p>
-      ) : (
-        // @ts-ignore
-        <Profile data={data} />
-      )}
-    </main>
+    <>
+      <header className="mb-16 h-[48px] shadow">
+        <nav className="max-w-[600px] mx-auto flex h-full items-center">
+          <ul className="flex gap-4">
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/me">Me</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        {error ? (
+          <div className="max-w-[600px] mx-auto">
+            <p>You need to log in to see this page.</p>
+            <Link href="/">Log in</Link>
+          </div>
+        ) : (
+          // @ts-ignore
+          <div className="max-w-[600px] mx-auto">
+            <Profile data={data} />
+          </div>
+        )}
+      </main>
+    </>
   );
 }
